@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "steno.h"
+#include "stegano.h"
 
 void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
 
@@ -54,7 +54,7 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
 void hiding(unsigned char byte_message, int byte_number, unsigned char byte_img, unsigned char* byte_dest){
 
 /* Selection du bit */
-    int bit_to_write = ((byte_message >> byte_number) & 0x01);
+    int bit_to_write = ((byte_message >> (7-byte_number)) & 0x01);
     int last_bit_img = 0;
 
 /* Ecriture du bit */
@@ -69,14 +69,14 @@ void hiding(unsigned char byte_message, int byte_number, unsigned char byte_img,
         else{/* Sinon : le bit est deja a zero */
             *byte_dest = byte_img;
         }
-        
+
     }
 }
 
 void ecriture_header(FILE* IMG_SRC, FILE* IMG_DEST){
 
     unsigned char entete[TAILLE_ENTETE];
-    
+
     fread(entete, 1, TAILLE_ENTETE, IMG_SRC);
     fwrite(entete, 1, TAILLE_ENTETE, IMG_DEST);
 
