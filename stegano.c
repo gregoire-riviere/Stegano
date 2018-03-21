@@ -18,6 +18,13 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
     int indice_octet = 0;
     int indice_bit=0;
 
+/* Verification de la longueur du message */
+
+    if(verification_taille(message, IMG_SRC) == 0){
+      printf("[ERR] Le message est trop long ou l'image trop petite");
+      return;
+    }
+
 /* Skip des headers */
 
     ecriture_header(IMG_SRC, IMG_DEST);
@@ -87,6 +94,22 @@ void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST){
     unsigned char byte = 0;
     while(fread(&byte, 1, 1, IMG_SRC) != 0){
         fwrite(&byte, 1, 1, IMG_DEST);
+    }
+
+}
+
+int name(char* message, FILE* IMG_SRC){
+
+    int taille_reelle;
+
+    fseek(IMG_SRC, 0L, SEEK_END);
+    taille_reelle = ftell(IMG_SRC) - TAILLE_ENTETE;
+    rewind(IMG_SRC);
+
+    if(strlen(message)*8 > taille_reelle){
+      return 0;
+    }else{
+      return 1;
     }
 
 }
