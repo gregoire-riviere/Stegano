@@ -12,6 +12,6 @@
     /* Ecriture de la fin de l'image source */
     void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST);
     /* Verification de la taille du message */
-    int name(char* message, FILE* IMG_SRC);
+    int verification_taille(char* message, FILE* IMG_SRC);
 
 #endif

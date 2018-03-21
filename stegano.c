@@ -98,7 +98,7 @@ void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST){
 
 }
 
-int name(char* message, FILE* IMG_SRC){
+int verification_taille(char* message, FILE* IMG_SRC){
 
     int taille_reelle;
 
