@@ -9,4 +9,6 @@
     void hiding(unsigned char byte_message, int byte_number, unsigned char byte_img, unsigned char* byte_dest);
     /* Ecriture des entetes */
     void ecriture_header(FILE* IMG_SRC, FILE* IMG_DEST);
+    /* Ecriture de la fin de l'image source */
+    void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST);
 #endif

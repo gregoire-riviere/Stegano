@@ -11,7 +11,6 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
     byte_dest : resultat à ecrire dans l'image de destination */
 
     unsigned char byte_img = 0;
-    unsigned char byte_mess = message[0];
     unsigned char byte_dest = 0;
 
 /* Indices de deplacement */
@@ -45,6 +44,9 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
         }
 
     }
+    if(indice_octet >= strlen(message)){
+        ecrire_reste(IMG_SRC, IMG_DEST);
+    }
 
 }
 
@@ -63,5 +65,14 @@ void ecriture_header(FILE* IMG_SRC, FILE* IMG_DEST){
     
     fread(entete, 1, TAILLE_ENTETE, IMG_SRC);
     fwrite(entete, 1, TAILLE_ENTETE, IMG_DEST);
+
+}
+
+void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST){
+
+    unsigned char byte = 0;
+    while(fread(&byte, 1, 1, IMG_SRC) != 0){
+        fwrite(&byte, 1, 1, IMG_DEST);
+    }
 
 }
