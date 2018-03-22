@@ -1,9 +1,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stegano.h"
+#include "../hd/stegano.h"
 
-void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
+int main_hiding(int argc, char *argv[]){
+
+    if(argc < 5){
+        printf("[ERR] Nombre d'arguments invalide\n");
+        return 10;
+    }
+
+    char* message = argv[2];
+    char* img_src = argv[3];
+    char* img_dest = argv[4];
+
+    FILE* IMG_SRC = fopen(img_src, "rb");
+
+    if(IMG_SRC == NULL){
+        printf("[ERR] Image source introuvable, probleme d'ouverture\n");
+        return 11;
+    }
+
+    /* Ouverture de l'image de destination */
+    FILE* IMG_DEST = fopen(img_dest, "wb+");
+
+    if(IMG_DEST == NULL){
+        printf("[ERR] Impossible de creer l'image de destination. Verifiez que vous disposez des droits.\n");
+        return 11;
+    }
+
+    /* Lancement */
+    run_hide_mess(message, IMG_SRC, IMG_DEST);
+
+    /* Fermeture de l'image */
+
+    fclose(IMG_SRC);
+    fclose(IMG_DEST);
+
+    return 0;
+
+}
+
+void run_hide_mess(char* message_user, FILE* IMG_SRC, FILE* IMG_DEST){
 
 /*  Octets de lecture
     byte_img : octet lu dans l'image source
@@ -18,11 +56,21 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
     int indice_octet = 0;
     int indice_bit=0;
 
+/* Ajout de la taille du message */
+    char* message = NULL;
+    message = enrichir_taille(message_user);
+    /* DEBUG */
+    printf("[INFO] message : [%s]\n", message);
+
+    if(message == NULL){
+        printf("[ERR] Erreur d'enrichissement avec la taille\n");
+    }
+
 /* Verification de la longueur du message */
 
     if(verification_taille(message, IMG_SRC) == 0){
-      printf("[ERR] Le message est trop long ou l'image trop petite");
-      return;
+        printf("[ERR] Le message est trop long ou l'image trop petite\n");
+        return;
     }
 
 /* Skip des headers */
@@ -51,10 +99,13 @@ void run_hide_mess(char* message, FILE* IMG_SRC, FILE* IMG_DEST){
         }
 
     }
+
     if(indice_octet >= strlen(message)){
         fwrite(&byte_dest, 1, 1, IMG_DEST);
         ecrire_reste(IMG_SRC, IMG_DEST);
     }
+
+    free(message);
 
 }
 
@@ -107,9 +158,32 @@ int verification_taille(char* message, FILE* IMG_SRC){
     rewind(IMG_SRC);
 
     if(strlen(message)*8 > taille_reelle){
-      return 0;
+        return 0;
     }else{
-      return 1;
+        return 1;
     }
+
+}
+
+char* enrichir_taille(char* message_user){
+
+    /* Ecriture de la taille */
+    char taille_mess_txt[50];
+    sprintf(taille_mess_txt, "%d", strlen(message_user));
+    
+    /* Taille du message = taille message user + nombre de chiffres de sa taille + 1 pour le separateur + 1 pour le \0 */
+    char* message = NULL;
+    message = malloc(sizeof(char) * (strlen(message_user) + strlen(taille_mess_txt) + 2));
+
+    if(message == NULL){
+        return NULL;
+    }
+
+    /* Assemblage du message */
+    strcpy(message, taille_mess_txt);
+    strcat(message, ";");
+    strcat(message, message_user);
+
+    return message;
 
 }
