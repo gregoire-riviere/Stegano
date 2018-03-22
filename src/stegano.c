@@ -10,8 +10,8 @@ int main_hiding(int argc, char *argv[]){
         return 10;
     }
 
-    char* message = argv[2];
-    char* img_src = argv[3];
+    char* img_src = argv[2];
+    char* message = argv[3];
     char* img_dest = argv[4];
 
     FILE* IMG_SRC = fopen(img_src, "rb");
