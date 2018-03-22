@@ -109,6 +109,8 @@ void run_hide_mess(char* message_user, FILE* IMG_SRC, FILE* IMG_DEST){
 
 }
 
+/* Fonction d'ecriture */
+
 void hiding(unsigned char byte_message, int byte_number, unsigned char byte_img, unsigned char* byte_dest){
 
 /* Selection du bit */
@@ -131,6 +133,8 @@ void hiding(unsigned char byte_message, int byte_number, unsigned char byte_img,
     }
 }
 
+/* Ecriture des entetes */
+
 void ecriture_header(FILE* IMG_SRC, FILE* IMG_DEST){
 
     unsigned char entete[TAILLE_ENTETE];
@@ -139,6 +143,8 @@ void ecriture_header(FILE* IMG_SRC, FILE* IMG_DEST){
     fwrite(entete, 1, TAILLE_ENTETE, IMG_DEST);
 
 }
+
+/* Ecritures des parties unused de l'image */
 
 void ecrire_reste(FILE* IMG_SRC, FILE* IMG_DEST){
 
@@ -170,7 +176,7 @@ char* enrichir_taille(char* message_user){
     /* Ecriture de la taille */
     char taille_mess_txt[50];
     sprintf(taille_mess_txt, "%d", strlen(message_user));
-    
+
     /* Taille du message = taille message user + nombre de chiffres de sa taille + 1 pour le separateur + 1 pour le \0 */
     char* message = NULL;
     message = malloc(sizeof(char) * (strlen(message_user) + strlen(taille_mess_txt) + 2));

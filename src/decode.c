@@ -7,6 +7,8 @@ int main_finding(char *argv[]){
 
     char* img = argv[2];
 
+    /* Ouverture de l'image */
+
     FILE* IMG = fopen(img, "rb");
 
     if(IMG == NULL){
@@ -33,8 +35,7 @@ int get_taille_message(FILE* IMG){
     chiffre_lu[0] = lecture_1_octet(IMG);
     while( chiffre_lu[0] != ';')
     {
-        /* DEBUG */
-        printf("[%c]", chiffre_lu[0]);
+
         nombre = nombre * 10 + atoi(chiffre_lu);
         chiffre_lu[0] = lecture_1_octet(IMG);
     }
@@ -46,6 +47,8 @@ char lecture_1_octet(FILE *IMG){
     unsigned char byte_read = 0;
     char total = 0;
     int i;
+
+    /* Lecture des 8 octets d'image et recuperation du dernier bit */
     for (i = 0; i<8; i++){
         total *=2;
         fread(&byte_read, 1, 1, IMG);

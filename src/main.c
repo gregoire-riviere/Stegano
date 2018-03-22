@@ -18,10 +18,11 @@ int main(int argc, char *argv[])
     /* Lancement de l'ecriture du message */
 
         return main_hiding(argc, argv);
-        
+
     }
     else if( action == 'f' ){
-        
+    /* Lancement du dechiffrement */
+
         return main_finding(argv);
 
     }else{
