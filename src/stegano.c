@@ -59,8 +59,6 @@ void run_hide_mess(char* message_user, FILE* IMG_SRC, FILE* IMG_DEST){
 /* Ajout de la taille du message */
     char* message = NULL;
     message = enrichir_taille(message_user);
-    /* DEBUG */
-    printf("[INFO] message : [%s]\n", message);
 
     if(message == NULL){
         printf("[ERR] Erreur d'enrichissement avec la taille\n");
@@ -106,7 +104,7 @@ void run_hide_mess(char* message_user, FILE* IMG_SRC, FILE* IMG_DEST){
     }
 
     free(message);
-
+    printf("Message ecrit avec succes!\n\n");
 }
 
 /* Fonction d'ecriture */

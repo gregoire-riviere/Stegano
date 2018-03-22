@@ -1,7 +1,7 @@
 SRC_DIR=src
 HD_DIR=hd
-GCC_FLAG="-Wall"
-DEBUG="-g"
+GCC_FLAG=-Wall
+DEBUG=-g
 
 stegano: stegano.o main.o decode.o
 	gcc $(DEBUG) -o $@ $^

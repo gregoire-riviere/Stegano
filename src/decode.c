@@ -18,8 +18,11 @@ int main_finding(char *argv[]){
 
     int taille_message = get_taille_message(IMG);
 
-    printf("[DEBUG - TEMPO] taille du message : %d\n", taille_message);
+    char* message_lu = get_message(IMG, taille_message);
 
+    printf("Message : %s\n\n", message_lu);
+
+    free(message_lu);
     return 0;
 }
 
@@ -58,5 +61,19 @@ char lecture_1_octet(FILE *IMG){
         }
     }
     return total;
+
+}
+
+char* get_message(FILE* IMG, int taille){
+
+  char* message = NULL;
+  message = malloc(sizeof(char) * taille);
+  int i;
+
+  for(i = 0; i<taille; i++){
+    message[i] = lecture_1_octet(IMG);
+  }
+
+  return message;
 
 }

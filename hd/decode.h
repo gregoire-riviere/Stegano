@@ -9,5 +9,7 @@
     int get_taille_message(FILE* IMG);
     /* fonction tres utile : lecture d'un octet de message en lisant 8 octets d'image */
     char lecture_1_octet(FILE *IMG);
+    /* lecture du corps du message */
+    char* get_message(FILE* IMG, int taille);
 
 #endif
